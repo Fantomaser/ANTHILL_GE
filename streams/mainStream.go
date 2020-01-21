@@ -6,6 +6,7 @@ import (
 	"image/color"
 	"image/png"
 	"os"
+	"strconv"
 )
 
 var rect image.Rectangle
@@ -14,15 +15,17 @@ var pict *image.RGBA
 //LogicStreamGo is main stream encapsulating other engine stream
 func LogicStreamGo(token chan<- int64) {
 	ConfigurateRect()
-	rect = image.Rect(0, 0, Monitor.MonitorSize[0].H, Monitor.MonitorSize[0].W)
-	pict = image.NewRGBA(rect)
-	SavePNG()
+	for i, _ := range Monitor.MonitorSize {
+		rect = image.Rect(0, 0, Monitor.MonitorSize[i].H, Monitor.MonitorSize[i].W)
+		pict = image.NewRGBA(rect)
+		SavePNG(i)
+	}
 	token <- 0
 }
 
 //SavePNG ...
-func SavePNG() {
-	file, err := os.Create("Image.png")
+func SavePNG(name int) {
+	file, err := os.Create(strconv.Itoa(name) + ".png")
 
 	if err != nil {
 		fmt.Println(err.Error())
