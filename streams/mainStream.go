@@ -14,7 +14,7 @@ var pict *image.RGBA
 //LogicStreamGo is main stream encapsulating other engine stream
 func LogicStreamGo(token chan<- int64) {
 	ConfigurateRect()
-	rect = image.Rect(0, 0, H, W)
+	rect = image.Rect(0, 0, Monitor.MonitorSize[0].H, Monitor.MonitorSize[0].W)
 	pict = image.NewRGBA(rect)
 	SavePNG()
 	token <- 0
@@ -34,8 +34,8 @@ func SavePNG() {
 	col.B = 0
 	col.A = 200
 
-	for x := 0; x < 100; x++ {
-		for y := 0; y < 100; y++ {
+	for x := 0; x < rect.Dx(); x++ {
+		for y := 0; y < rect.Dy(); y++ {
 			pict.SetRGBA(x, y, col)
 		}
 	}
