@@ -3,18 +3,51 @@ package streams
 import (
 	"fmt"
 	"image"
-	//"os"
-
+	"image/color"
+	"image/png"
+	"os"
 )
 
-var pict image.Image = image.Image{}
+var rect image.Rectangle
+var pict *image.RGBA
 
 //LogicStreamGo is main stream encapsulating other engine stream
 func LogicStreamGo(token chan<- int64) {
-	fmt.Scanln()
+	ConfigurateRect()
+	rect = image.Rect(0, 0, H, W)
+	pict = image.NewRGBA(rect)
+	SavePNG()
 	token <- 0
 }
 
-func SaveJpeg() {
+//SavePNG ...
+func SavePNG() {
+	file, err := os.Create("Image.png")
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	col := color.RGBA{}
+	col.R = 200
+	col.G = 0
+	col.B = 0
+	col.A = 200
+
+	for x := 0; x < 100; x++ {
+		for y := 0; y < 100; y++ {
+			pict.SetRGBA(x, y, col)
+		}
+	}
+
+	//jpeg.Encode(file, pict.SubImage(pict.Rect), &opt)
+
+	var img image.Image = pict.SubImage(pict.Rect)
+
+	error := png.Encode(file, img)
+
+	if error != nil {
+		fmt.Println(error.Error())
+	}
 
 }
