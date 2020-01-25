@@ -7,8 +7,6 @@ import (
 	"image/png"
 	"os"
 	"strconv"
-
-	"./objects"
 )
 
 var rect image.Rectangle
@@ -26,12 +24,7 @@ func LogicStreamGo(token chan<- int64) {
 		SavePNG(i)
 	}
 
-	ObjTree := objects.ModelTree{}
-
-	camera := objects.Camera{}
-	camera.Pos = objects.Point{X: 0, Y: 0, Z: 0}
-	camera.
-		token <- 0
+	token <- 0
 }
 
 //SavePNG ...
