@@ -12,6 +12,7 @@ type MonitorInfo struct {
 	MonitorSize  []MonitorRect
 }
 
+//Config ...
 type Config struct {
 	Monitor MonitorInfo
 }
