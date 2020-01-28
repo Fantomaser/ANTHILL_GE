@@ -38,7 +38,7 @@ func GetWinWndSize(monitorNum int, monitor *MonitorInfo) {
 	for i := 0; len(monitor.MonitorParam[3+monitorNum*6]) > i; i++ {
 		if monitor.MonitorParam[3+monitorNum*6][i] == 'h' {
 			for j := i + 2; monitor.MonitorParam[3+monitorNum*6][j] != ','; j++ {
-				sizeH = append(sizeH, monitor.MonitorParam[3+monitorNum*6][j])
+				sizeW = append(sizeW, monitor.MonitorParam[3+monitorNum*6][j])
 			}
 			break
 		}
@@ -47,7 +47,7 @@ func GetWinWndSize(monitorNum int, monitor *MonitorInfo) {
 	for i := 0; len(monitor.MonitorParam[3+monitorNum*6]) > i; i++ {
 		if monitor.MonitorParam[3+monitorNum*6][i] == 'g' {
 			for j := i + 4; monitor.MonitorParam[3+monitorNum*6][j] != '}'; j++ {
-				sizeW = append(sizeW, monitor.MonitorParam[3+monitorNum*6][j])
+				sizeH = append(sizeH, monitor.MonitorParam[3+monitorNum*6][j])
 			}
 			break
 		}
@@ -58,5 +58,5 @@ func GetWinWndSize(monitorNum int, monitor *MonitorInfo) {
 
 	monitor.MonitorSize = append(monitor.MonitorSize, MonitorRect{h, w})
 
-	fmt.Println(h, w)
+	fmt.Println("H: ",h,"\n W :", w)
 }

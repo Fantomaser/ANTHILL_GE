@@ -5,34 +5,34 @@ import (
 	"math"
 )
 
-//Point // TODO:
+//Point ...
 type Point struct {
 	X int64
 	Y int64
 	Z int64
 }
 
-//Vector is forvard
+//Vector is forvad...
 type Vector struct {
 	X float64
 	Y float64
 	Z float64
 }
 
-//Axis // TODO:
+//Axis ....
 type Axis struct {
 	Forvard Vector
 	Up      Vector
 	Right   Vector
 }
 
-//Model // TODO:
+//Model ....
 type Model struct {
 	Pos       Point
 	Triangles [][3]Point
 }
 
-//GetColor // TODO:
+//GetColor ....
 func (model Model) GetColor(vec Vector) color.RGBA {
 	col := color.RGBA{}
 	col.R = 0
@@ -42,16 +42,10 @@ func (model Model) GetColor(vec Vector) color.RGBA {
 	return col
 }
 
-//ModelTree // TODO:
+//ModelTree ....
 type ModelTree []Model
 
-//MonitorRect // TODO:
-type MonitorRect struct {
-	H int
-	W int
-}
-
-//AddCube // TODO:
+//AddCube ....
 func (tree *ModelTree) AddCube() (num int) {
 
 	triangles := make([][3]Point, 0)
@@ -98,7 +92,11 @@ func (tree *ModelTree) AddCube() (num int) {
 	return len(*tree) - 1
 }
 
-//ToVector // TODO:
+func (tree *ModelTree) Move(int i) (num int) {
+	tree[i]
+}
+
+//ToVector ....
 func (p Point) ToVector() (vec Vector) {
 	vec.X = float64(p.X)
 	vec.Y = float64(p.Y)
@@ -106,30 +104,49 @@ func (p Point) ToVector() (vec Vector) {
 	return
 }
 
-//GetVector // TODO:
+//GetVector ....
 func (p Point) GetVector(p2 Point) (vec Vector) {
-	vec.X = float64(p2.X) - float64(p.X)
-	vec.X = float64(p2.Y) - float64(p.Y)
-	vec.Z = float64(p2.Z) - float64(p.Z)
+	vec.X = float64(p2.X - p.X)
+	vec.X = float64(p2.Y - p.Y)
+	vec.Z = float64(p2.Z - p.Z)
 	return
 }
 
-//Normalize // TODO:
+//Normalize ....
 func (vec *Vector) Normalize() {
-	lenth := math.Sqrt(vec.X*vec.X + vec.Y*vec.Y + vec.Z*vec.Z)
+	lenth := math.Sqrt(vec.X * vec.X + vec.Y*vec.Y + vec.Z*vec.Z)
 	vec.X /= lenth
 	vec.Y /= lenth
 	vec.Z /= lenth
 }
 
-//Normalize // TODO:
+//Normalize ...
 func (ax *Axis) Normalize() {
 	ax.Forvard.Normalize()
 	ax.Right.Normalize()
 	ax.Up.Normalize()
 }
 
-//Add // TODO:
+func (vec Vector) FindAngle(vec3 Vector) (angle float64) {
+	angle = (vec.X * vec3.X) + (vec.Y * vec3.Y) + (vec.Z * vec3.Z)
+	return
+}
+
+func (vec Vector) VectMult(vec3 Vector) (volume float64) {
+	volume = vec.Lenth()*vec3.Lenth()*math.Sin(vec.FindAngle(vec3))
+	return
+}
+
+//GetNormal ...
+func (vec Vector) GetNormal(vec3 Vector) (vec2 Vector) {
+	vec2.X = vec.Y * vec3.Z - vec.Z*vec3.Y
+	vec2.Y = -(vec.X*vec3.Z - vec.Z*vec3.X)
+	vec2.Z = vec.X*vec3.Y - vec.Y*vec3.X
+	return
+}
+
+
+//Add ....
 func (vec Vector) Add(vec3 Vector) (vec2 Vector) {
 	vec2.X = vec.X + vec3.X
 	vec2.Y = vec.Y + vec3.Y
@@ -137,7 +154,7 @@ func (vec Vector) Add(vec3 Vector) (vec2 Vector) {
 	return
 }
 
-//Subtract // TODO:
+//Subtract ...
 func (vec Vector) Subtract(vec3 Vector) (vec2 Vector) {
 	vec2.X = vec.X - vec3.X
 	vec2.Y = vec.Y - vec3.Y
@@ -145,15 +162,9 @@ func (vec Vector) Subtract(vec3 Vector) (vec2 Vector) {
 	return
 }
 
-//GetNormal // TODO:
-func (vec Vector) GetNormal(vec3 Vector) (vec2 Vector) {
-	vec2.X = vec.Y*vec3.Z - vec.Z*vec3.Y
-	vec2.Y = -(vec.X*vec3.Z - vec.Z*vec3.X)
-	vec2.Z = vec.X*vec3.Y - vec.Y*vec3.X
-	return
-}
 
-//Multiply // TODO:
+
+//Multiply ...
 func (vec Vector) Multiply(n float64) (vec2 Vector) {
 	vec2.X = vec.X * n
 	vec2.Y = vec.Y * n
@@ -161,7 +172,7 @@ func (vec Vector) Multiply(n float64) (vec2 Vector) {
 	return
 }
 
-//Divide // TODO:
+//Divide ...
 func (vec Vector) Divide(n float64) (vec2 Vector) {
 	vec2.X = vec.X / n
 	vec2.Y = vec.Y / n
@@ -169,7 +180,7 @@ func (vec Vector) Divide(n float64) (vec2 Vector) {
 	return
 }
 
-//Lenth // TODO:
+//Lenth ...
 func (vec *Vector) Lenth() float64 {
 	return math.Sqrt(vec.X*vec.X + vec.Y*vec.Y + vec.Z*vec.Z)
 }
