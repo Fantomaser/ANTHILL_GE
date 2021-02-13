@@ -1,1 +1,1 @@
-# ANTHILL_GE
+# Simple go ray trace
